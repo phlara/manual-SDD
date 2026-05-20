@@ -14,8 +14,12 @@ PHL is a set of interconnected projects managed by phlara. All projects communic
 
 ```
 urgara-newsletter  ──┐
-                     ├──► Dashboard Nivel 1 (Cristian) ──► Dashboard PHL (nivel dios)
-pds-newsletter     ──┘
+                     ├──► Dashboard Nivel 1 (Cristian)
+pds-newsletter     ──┘              │
+                                    │ estado / healthcheck
+urgara-newsletter  ──┐              │
+pds-newsletter     ──┼──────────────┴──► Dashboard PHL (phlara)
+Dashboard Nivel 1  ──┘
 ```
 
 | Project | Stack | VPS | Status |

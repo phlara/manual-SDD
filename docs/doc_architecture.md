@@ -16,9 +16,17 @@ Use it to understand:
 
 ```
 urgara-newsletter  ──┐
-                     ├──► Dashboard Nivel 1 (Cristian) ──► Dashboard PHL (nivel dios)
-pds-newsletter     ──┘
+                     ├──► Dashboard Nivel 1 (Cristian)
+pds-newsletter     ──┘              │
+                                    │ estado / healthcheck
+urgara-newsletter  ──┐              │
+pds-newsletter     ──┼──────────────┴──► Dashboard PHL (phlara)
+Dashboard Nivel 1  ──┘
 ```
+
+- **Dashboard Nivel 1** consumes: urgara-newsletter + pds-newsletter only.
+- **Dashboard PHL** consumes everything: urgara + PDS + Dashboard Nivel 1.
+  Dashboard PHL needs to know if Dashboard Nivel 1 is alive and working correctly.
 
 All projects communicate via REST API. Authentication: `X-API-Key` header.  
 API contracts are the source of truth and live in **`phlara/apis`** (repo companion).
