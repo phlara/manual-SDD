@@ -1,300 +1,154 @@
-# Agent Verification Guide
+# PHL — Verification Guide
 
 ## Purpose
 
-Use this document to choose the right verification path for a task without rediscovering scripts, services, or test suites.
+Use this document to choose the right verification path before and after any change in a PHL project.
 
-This is not a catalog of every command in the repository.
-It is a curated guide for:
-
+This is not a catalog of every command. It is a curated guide for:
 - fast local checks,
-- integration validation,
-- end-to-end validation,
-- debugging retrieval and streaming behavior.
+- API contract validation,
+- deployment verification,
+- debugging live issues on VPS.
 
-Use the cheapest verification that can detect the risk introduced by the task.
+Use the cheapest verification that can detect the risk of the change.
+
+---
 
 ## Verification Strategy
 
 Prefer this order:
 
-1. unit tests for local contract/rule changes,
-2. integration tests for multi-layer or repository/API behavior,
-3. end-to-end tests for real routing, real vector DB, real LLM, or final user-visible behavior,
-4. manual smoke/debug commands only when tests are too indirect or when you need to inspect live payloads.
+1. Unit tests for pure logic changes.
+2. API contract tests for endpoint behavior.
+3. Manual smoke test against staging/VPS for deployment or config changes.
+4. Live VPS inspection only when production behavior diverges from expected.
 
-Do not default to E2E for every change.
-Do use E2E when prompt behavior, retrieval classification, streaming parity, or vector DB behavior is the real success criterion.
+Do not deploy to production without at least running the API smoke check.
+
+---
 
 ## Quick Map
 
-### I changed pure logic or parsing
+### I changed pure logic (pipeline, parsing, email formatting)
 
-Use:
-
-- `poetry run pytest -q --no-cov tests/unit`
-
-Best for:
-
-- structured JSON parsing,
-- citation normalization,
-- context building,
-- answer contract rules,
-- stream extraction behavior.
-
-### I changed service wiring, repositories, or API contracts
-
-Use:
-
-- `poetry run pytest -q --no-cov tests/integration`
-
-Best for:
-
-- API response shape,
-- repository/service interaction,
-- Qdrant repository behavior,
-- error handler behavior,
-- indexing pipeline integration.
-
-### I changed prompt behavior, routing, or final model behavior
-
-Use:
-
-- `poetry run pytest -q --no-cov tests/e2e/test_answer_routing_matrix_qdrant_real_corpus.py`
-
-Best for:
-
-- `retrieval` vs `llm_knowledge` vs `none`,
-- real Qdrant retrieval,
-- real LLM classification,
-- validating prompt changes against a controlled corpus.
-
-### I changed `/query-stream`, prompt parsing, or final stream metadata
-
-Use:
-
-- `poetry run pytest -q --no-cov tests/e2e/test_query_stream_parity_qdrant_real_corpus.py`
-
-Best for:
-
-- parity between `/query` and `/query-stream`,
-- preventing cases where streamed text is correct but `done` metadata is wrong,
-- retrieval/knowledge/none parity at endpoint level.
-
-## Recommended Commands By Goal
-
-### Verify full unit safety net
-
+Run unit tests:
 ```bash
-poetry run pytest -q --no-cov tests/unit
+python -m pytest tests/unit -q
 ```
 
-Use when:
+### I changed an API endpoint or its response shape
 
-- touching domain rules,
-- changing parsing logic,
-- refactoring services internally.
-
-### Verify API + repository integration
-
+1. Run integration tests:
 ```bash
-poetry run pytest -q --no-cov tests/integration
+python -m pytest tests/integration -q
 ```
 
-Use when:
+2. Update the contract file in `phlara/apis` — e.g. `urgara-newsletter.md`.
 
-- changing route behavior,
-- changing repository contracts,
-- changing integration fixtures,
-- changing Qdrant/Pinecone selection logic.
-
-### Verify routing matrix with real LLM and real Qdrant
-
+3. Smoke test the endpoint locally:
 ```bash
-poetry run pytest -q --no-cov tests/e2e/test_answer_routing_matrix_qdrant_real_corpus.py
+curl -s -H "X-API-Key: <key>" http://localhost:5000/api/v1/status | python -m json.tool
 ```
 
-Use when:
+### I changed the Docker setup or Nginx config
 
-- changing `qa_answer.yaml`,
-- changing `AnswerService`,
-- changing retrieval classification,
-- changing how citations are validated.
-
-Notes:
-
-- uses Qdrant real,
-- creates isolated collection,
-- indexes `evals/manuals/tesa_flexo_printing_troubleshooting_guide.md`,
-- calls the real LLM.
-
-### Verify `/query` and `/query-stream` parity end to end
-
+1. Build and run locally:
 ```bash
-poetry run pytest -q --no-cov tests/e2e/test_query_stream_parity_qdrant_real_corpus.py
+docker compose up --build
 ```
 
-Use when:
-
-- changing `StreamAnswerService`,
-- changing structured answer parsing,
-- changing stream finalization,
-- changing SSE semantics,
-- changing prompt output contract.
-
-Notes:
-
-- primary guardrail for stream `done` regressions,
-- covers `retrieval`, `llm_knowledge`, and `none`.
-
-### Run the full E2E subtree
-
+2. Verify the health endpoint responds:
 ```bash
-poetry run pytest -q --no-cov tests/e2e
+curl -s http://localhost:5000/api/v1/healthz
 ```
 
-Use when:
-
-- you changed both routing and stream behavior,
-- you want confidence in real end-to-end behavior before handing off.
-
-Avoid for:
-
-- routine fast feedback,
-- small local refactors with no behavior change.
-
-## Manual / Debug Checks
-
-### Smoke test `POST /query` against a running API
-
+3. Check Nginx config syntax:
 ```bash
-poetry run python scripts/smoke_test_query.py --base-url http://localhost:8001 --question "cual es el objetivo de FIRST?"
+nginx -t
 ```
 
-Use when:
+### I changed tenant config (`tenants/<slug>/config.yaml`)
 
-- the API is already running,
-- you want a quick HTTP contract check.
+1. Start the project locally with that tenant active.
+2. Verify `/status` returns the expected branding and recipient count.
+3. Do NOT send real emails during local testing — check the `.env` has `EMAIL_DRY_RUN=true`.
 
-Warning:
+---
 
-- this script is older than the current public contract and may need maintenance when response keys change.
-- prefer integration/API tests for canonical verification.
+## VPS Verification
 
-### Call `/query` directly with curl
-
-Example:
+### Check that the service is alive
 
 ```bash
-curl -s -X POST "http://127.0.0.1:8001/query" \
-  -H "Content-Type: application/json" \
-  -d '{"question":"¿Cuáles son las posibles causas de que el borde de la plancha se levante durante la impresión?"}'
+curl -s https://urgara.sytes.net/api/v1/healthz
 ```
 
-Use when:
+Expected:
+```json
+{ "status": "ok", "tenant": "urgara" }
+```
 
-- you need the raw HTTP response quickly,
-- you are debugging API-only behavior.
-
-### Inspect `/query-stream` raw SSE
-
-Use a short local Python snippet with `TestClient` or a real client against the running API.
-
-Best for:
-
-- checking raw `delta` events,
-- verifying final `done`,
-- reproducing frontend-reported stream bugs without using the frontend.
-
-### Run the eval pipeline for one manual/document id
+### Check the current pipeline state
 
 ```bash
-PYTHONPATH=src poetry run python -m flexo_app.evals.pipeline --document-id <document_id>
+curl -s -H "X-API-Key: <key>" https://urgara.sytes.net/api/v1/status | python -m json.tool
 ```
 
-Use when:
-
-- validating a document-scoped retrieval dataset,
-- checking retrieval quality for a specific manual,
-- reproducing eval behavior outside tests.
-
-Optional:
+### SSH into the VPS to inspect logs
 
 ```bash
-PYTHONPATH=src poetry run python -m flexo_app.evals.pipeline --document-id <document_id> --skip-index
+ssh root@157.230.182.52
+docker logs <container_name> --tail 100
 ```
 
-### Parse one markdown/PDF input quickly
+### Restart the container after a failed deploy
 
 ```bash
-poetry run python scripts/parse_md_print.py "/absolute/path/to/document.pdf"
+ssh root@157.230.182.52
+cd /app
+docker compose down && docker compose up -d
 ```
 
-Use when:
+---
 
-- debugging parsing quality,
-- checking whether the source material was extracted correctly before indexing.
+## API Smoke Checks
 
-### Parse a folder in parallel
+### List newsletters
 
 ```bash
-poetry run python scripts/parse_folder_parallel.py "/absolute/path/to/folder" --pattern "*.pdf" --concurrency 4
+curl -s -H "X-API-Key: <key>" https://urgara.sytes.net/api/v1/newsletters | python -m json.tool
 ```
 
-Use when:
-
-- validating parsing over a batch of documents.
-
-## Vector DB Verification Notes
-
-### Qdrant
-
-For the real-vector-db verification paths in this guide, use Qdrant.
-
-In practice, this includes:
-
-- integration tests that exercise a real vector database,
-- end-to-end tests with real retrieval behavior,
-- isolated corpus validation intended to be reproducible.
-
-Start locally:
+### Get today's newsletter detail
 
 ```bash
-docker compose -f docker-compose.qdrant.yml up -d
+curl -s -H "X-API-Key: <key>" https://urgara.sytes.net/api/v1/newsletters/$(date +%Y%m%d) | python -m json.tool
 ```
 
-Health check:
+### Get email open events
 
 ```bash
-curl http://localhost:6333/collections
+curl -s -H "X-API-Key: <key>" https://urgara.sytes.net/api/v1/newsletters/$(date +%Y%m%d)/events | python -m json.tool
 ```
 
-### Pinecone
+---
 
-
-Pinecone can still be useful for production-like manual checks, but the canonical real-vector-db verification paths documented here use Qdrant.
-
-## When To Use Service-Level Verification
-
-Prefer service-level verification or debugging when the API transport is not the thing under test.
-
-Useful inspection points:
-
-- `AnswerService.retrieve_top_chunks(...)` to understand why a question classified as `retrieval`,
-- `AnswerService.answer(...)` to inspect final single-pass behavior without SSE,
-- `StreamAnswerService.stream(...)` to debug stream finalization or SSE semantics.
-
-Service-level verification is especially useful when:
-
-- frontend reports a mismatch,
-- API transport is probably not the root cause,
-- you need to see intermediate behavior fast.
-
-## Anti-patterns
+## Anti-Patterns
 
 Do not:
+- Push to `main` without verifying locally first — it deploys immediately.
+- Test email sending in production unless explicitly approved by phlara.
+- Modify `.env` on the VPS without documenting the change.
+- Trust only the admin web UI — always cross-check with the API.
 
-- use E2E as the first and only debugging tool for every task,
-- rely only on frontend manual tests for stream bugs,
-- trust outdated smoke scripts as canonical contract validators,
-- duplicate a test’s purpose manually if a stable automated suite already exists.
+---
+
+## Contract Update Checklist
+
+When any API endpoint changes, before merging:
+
+- [ ] API tests pass (`pytest tests/integration`)
+- [ ] Updated the contract file in `phlara/apis`
+- [ ] Smoke tested the endpoint locally
+- [ ] Verified `/healthz` still responds after deploy
+- [ ] Notified dashboard consumers if the response shape changed

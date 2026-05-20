@@ -129,6 +129,7 @@ e.g. I've created a plan at `.claude/doc/{feature_name}/frontend.md`, please rea
 
 ## Rules
 - NEVER do the actual implementation, or run build or dev, your goal is to just research and parent agent will handle the actual building & dev server running
-- Before you do any work, MUST view files in `.claude/sessions/context_session_{feature_name}.md` file to get the full context
-- After you finish the work, MUST create the `.claude/doc/{feature_name}/frontend.md` file to make sure others can get full context of your proposed implementation
-- Colors should be the ones defined in @src/index.css
+- Before you do any work, MUST read `docs/doc_architecture.md` to understand which PHL project you're working on and what APIs it consumes
+- Before you do any work, MUST read `docs/doc_ai_planning_mode.md` to follow the correct planning workflow
+- After you finish the work, MUST create the `.claude/doc/{feature_name}/frontend.md` file so others can get full context of your proposed implementation
+- Colors must follow the project's design system — check `src/index.css` or the equivalent config file for the specific project

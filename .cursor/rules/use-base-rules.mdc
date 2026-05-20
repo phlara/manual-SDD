@@ -1,37 +1,23 @@
 ---
-description: Directs all AI agents to use the consolidated rules in base-standards.mdc
-globs: 
+description: Directs all AI agents to use the PHL architecture and planning docs
+globs:
 alwaysApply: true
 ---
 
-# Use Base Development Rules
+# PHL Development Rules
 
-All AI agents working on this project must follow the comprehensive development rules and guidelines defined in:
+All AI agents working on any PHL project must read and follow:
 
-**📋 [ai-specs/specs/base-standards.mdc](/Users/alvaromoya/projects/versiones ejercicios/AI4Devs-LTI/ai-specs/specs/base-standards.mdc)**
+**📋 [docs/doc_architecture.md](../../docs/doc_architecture.md)** — Canonical ecosystem architecture, project layout, API contracts, deployment model.
 
-## Key Directive
+**📋 [docs/doc_ai_planning_mode.md](../../docs/doc_ai_planning_mode.md)** — Planning workflow: always produce a High-Level Technical Contract and wait for approval before implementing.
 
-- **Single Source of Truth**: All development rules, coding standards, testing practices, and workflow requirements are maintained in `base-standards.mdc`
-- **No Rule Duplication**: Do not reference or follow other rule files - `base-standards.mdc` contains the complete and authoritative rule set
-- **Always Current**: `base-standards.mdc` is the actively maintained configuration - other rule files may be outdated
+**📋 [docs/doc_verification_guide.md](../../docs/doc_verification_guide.md)** — Verification paths for every change type.
 
-## What's Included in base-standards.mdc
+## Key Directives
 
-- **Core Principles**: Small tasks one at a time, Test-Driven Development (TDD), type safety, clear naming, incremental changes
-- **Language Standards**: English-only requirement for all technical artifacts
-- **Specific Standards**: Links to detailed standards for:
-  - Backend development (API, database patterns, testing, security)
-  - Frontend development (React components, UI/UX guidelines)
-  - Documentation (structure, formatting, maintenance)
-
-## Compliance
-
-Before starting any development work, agents must:
-1. Read and understand all rules in `base-standards.mdc`
-2. Follow the TDD process and core principles defined there
-3. Use the specified tools, testing frameworks, and standards
-4. Maintain the required code quality and type safety standards
-5. Refer to specific standards documents (backend, frontend, documentation) for detailed guidelines
-
-**Remember**: `base-standards.mdc` is the complete development rulebook for this project.
+- **Never implement without a plan.** Use `doc_ai_planning_mode.md` as the workflow.
+- **Never change an API endpoint without updating `phlara/apis`.** That repo is the source of truth for dashboard consumers.
+- **Never commit `.env` or secrets.** Keys live on the VPS only.
+- **Never force-push to `main`.** It deploys to production immediately.
+- **Single source of truth for agents/skills:** `ai-specs/` — symlinked to `.claude/`, `.cursor/`, `.codex/`.
