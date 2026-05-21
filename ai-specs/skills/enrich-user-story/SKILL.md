@@ -20,7 +20,7 @@ Optimize for **clarity, completeness, and closed decisions**.
 
 You MUST read the following file before asking any questions:
 
-docs/agent_architecture.md
+docs/doc_architecture.md
 
 If you cannot access or read this file, stop and inform the user.
 

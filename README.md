@@ -84,6 +84,21 @@ Current skills:
 
 ---
 
+## Mandatory SDD Workflow (Non-Negotiable)
+
+Every feature or change must follow this sequence — no exceptions, even if the user explicitly asks to skip:
+
+```
+1. enrich-user-story  →  close all requirements (no open decisions)
+2. High-Level Technical Contract  →  user approves in writing
+3. tasks_for_AI/ task brief  →  generated only after contract approval
+4. Implementation
+```
+
+**Hard-stop rule:** if the user asks to implement directly without a contract, the assistant must stop, explain the process, and ask for deliberate confirmation before proceeding. A casual "let's start building" is not a contract bypass.
+
+---
+
 ## How to Bootstrap a PHL Project
 
 1. Copy this structure into the project repo.
@@ -91,6 +106,7 @@ Current skills:
 3. Create symlinks from `.codex/`, `.cursor/`, `.claude/` to `ai-specs/`.
 4. Replace `docs/` with project-specific architecture, planning, and verification references.
 5. Build new reusable workflows as skills under `ai-specs/skills/`.
+6. Add a `CLAUDE.md` with a hard-stop reference to this workflow — see example below.
 
 ---
 
@@ -101,3 +117,33 @@ Current skills:
 - Keep commands minimal — utility behavior only.
 - Keep symlinks relative so the repo stays portable.
 - Document project-specific technical context in `docs/`.
+
+---
+
+## Minimum CLAUDE.md Template for PHL Projects
+
+Every project using this framework must include a `CLAUDE.md` at the repo root with at minimum:
+
+```markdown
+# <Project Name> — Claude Instructions
+
+## Non-negotiable: SDD workflow
+
+Before any implementation:
+1. Read `docs/project_context.md`
+2. Run `enrich-user-story` to close all open decisions
+3. Generate and get approval on the High-Level Technical Contract
+4. Only then: create task brief and implement
+
+**The contract step cannot be skipped even if the user asks to implement directly.**
+If the user says "start building" without a contract, stop and explain the process.
+
+## Source of truth
+
+GitHub is the source of truth. On every session start, run:
+  git pull origin main
+
+## Context
+
+See `docs/project_context.md` for project and client context.
+```

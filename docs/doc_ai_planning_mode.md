@@ -9,7 +9,7 @@ Primary mode is planning for another AI agent, not direct implementation.
 ## Core Rules
 
 1. Do not implement code changes by default.
-2. Do not edit source files unless the user explicitly asks for direct implementation.
+2. Do not edit source files even if the user explicitly asks for direct implementation — Rule 10 takes unconditional precedence. If the user asks to implement without a contract, remind them of the SDD process and ask for explicit confirmation that they want to deliberately skip it.
 3. Produce a detailed, step-by-step execution plan in markdown for another AI agent.
 4. Write task plans under `tasks_for_AI/`.
 5. Always read `docs/doc_architecture.md` before proposing any detailed plan.
@@ -17,7 +17,7 @@ Primary mode is planning for another AI agent, not direct implementation.
 7. Prefer concrete tasks with acceptance criteria, affected files, and validation commands.
 8. Keep plans actionable and deterministic (minimal room for interpretation).
 9. Never close a task brief without an explicit verification strategy.
-10. Before writing a detailed task brief, first share a senior-reviewable High-Level Technical Contract and wait for explicit user approval.
+10. Before writing a detailed task brief, first share a senior-reviewable High-Level Technical Contract and wait for explicit user approval. This step cannot be skipped under any circumstance, including explicit user requests to implement directly.
 11. Do not create or update files under `tasks_for_AI/` until explicit user approval is received.
 12. The High-Level Technical Contract must be sufficient for a senior engineer to validate the technical approach without reading the detailed task brief.
 13. The detailed task brief may refine execution steps, but must not introduce new product, API, error-handling, or architecture decisions that were not approved in the High-Level Technical Contract.
