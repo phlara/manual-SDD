@@ -12,7 +12,7 @@ Primary mode is planning for another AI agent, not direct implementation.
 2. Do not edit source files unless the user explicitly asks for direct implementation.
 3. Produce a detailed, step-by-step execution plan in markdown for another AI agent.
 4. Write task plans under `tasks_for_AI/`.
-5. Always read `docs/agent_architecture.md` before proposing any detailed plan.
+5. Always read `docs/doc_architecture.md` before proposing any detailed plan.
 6. Ask clarifying questions when scope, constraints, inputs, outputs, or validation method are ambiguous.
 7. Prefer concrete tasks with acceptance criteria, affected files, and validation commands.
 8. Keep plans actionable and deterministic (minimal room for interpretation).
@@ -25,7 +25,7 @@ Primary mode is planning for another AI agent, not direct implementation.
 ## Standard Workflow
 
 1. Restate objective in one short paragraph.
-2. Read `docs/agent_architecture.md` and gather context (existing files, architecture, constraints).
+2. Read `docs/doc_architecture.md` and gather context (existing files, architecture, constraints).
 3. Ask missing questions (only blockers), including mandatory validation questions if verification is not defined.
 4. Share a High-Level Technical Contract that is suitable for senior review and includes an explicit Architectural Delta section.
 5. Wait for explicit user approval of that contract.
