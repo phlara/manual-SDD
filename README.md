@@ -1,6 +1,8 @@
-# AI Specifications & Development Rules
+# PHL — SDD Framework
 
-This repository contains a comprehensive set of development rules, standards, and AI agent configurations designed to work seamlessly with multiple AI coding copilots. The setup is portable and can be imported into any project to provide consistent, high-quality AI-assisted development.
+This repository contains the **Spec-Driven Development (SDD) framework for the PHL ecosystem**: a comprehensive set of development rules, standards, and AI agent configurations designed to work seamlessly with multiple AI coding copilots. The setup is portable and can be imported into any PHL project to provide consistent, high-quality AI-assisted development with the same anti-spaghetti discipline.
+
+**Operator:** phlara (`phlara.engine@gmail.com`)
 
 ## 📁 Repository Structure
 
@@ -46,16 +48,35 @@ All these files reference the same core rules in `ai-specs/specs/base-standards.
 
 ## 🚀 Quick Start
 
-### 1. Import Into Your Project
+### 1. Bootstrap a new PHL project (recommended)
+
+Create an empty folder for the new project, open Claude Code in it, and say:
+
+> *"Iniciá un nuevo proyecto siguiendo manual-SDD"*
+
+That's it. Claude will:
+1. Clone the framework from `github.com/phlara/manual-SDD` to `/tmp`
+2. Copy the framework into your folder (excluding `.git` and `README.md`)
+3. Read `ai-specs/.commands/bootstrap-phl-project.md` and follow it
+4. Ask you the project name (if you didn't say it) and questions about the project's nature
+5. **Recommend a stack** with rationale (your job is to confirm, not choose blindly)
+6. Adapt the 5 stack-specific files to your chosen tech, preserving every LIDR architectural rule
+7. Create the contract file in `phlara/apis` and push it
+8. Initialize the project's git repo (local + optionally GitHub via `gh`)
+
+See **`docs/doc_bootstrap_guide.md`** for the full procedure and the special case of Dashboard PHL.
+
+### 2. Manual import (alternative)
 
 ```bash
 # Clone or copy this repository into your project
-cp -r LIDR-ai-specs/* your-project/
+git clone git@github.com:phlara/manual-SDD.git /tmp/manual-SDD
+rsync -av --exclude='.git' --exclude='README.md' /tmp/manual-SDD/ your-project/
 
 # The AI copilot will automatically detect the relevant configuration file
 ```
 
-### 2. Verify Configuration
+### 3. Verify Configuration
 
 Your AI copilot will automatically load:
 - **Claude/Cursor**: `CLAUDE.md` → `ai-specs/specs/base-standards.mdc`
@@ -159,7 +180,7 @@ All development follows principles defined in `ai-specs/specs/base-standards.mdc
 
 1. **Small Tasks, One at a Time**: Baby steps, never skip ahead
 2. **Test-Driven Development (TDD)**: Write failing tests first
-3. **Type Safety**: Fully typed code (TypeScript)
+3. **Type Safety**: Use the type system available in your project's language
 4. **Clear Naming**: Descriptive variables and functions
 5. **English Only**: All code, comments, documentation, and messages in English
 6. **90%+ Test Coverage**: Comprehensive testing across all layers
@@ -174,7 +195,7 @@ All development follows principles defined in `ai-specs/specs/base-standards.mdc
   - Testing requirements
 
 - **Frontend Standards**: `ai-specs/specs/frontend-standards.mdc`
-  - React component patterns
+  - Component patterns (adapted to your stack)
   - UI/UX guidelines
   - State management
   - Component testing
@@ -229,7 +250,7 @@ All development follows principles defined in `ai-specs/specs/base-standards.mdc
 
 ### Reference Examples (from LIDR Project)
 
-The following files are included as **reference examples** from the LIDR project. You should create your own versions tailored to your specific project:
+The following files are included as **reference examples** from the LIDR project. You should create your own versions tailored to your specific project (the `/bootstrap-phl-project` command does this automatically):
 
 - **API Specification**: `ai-specs/specs/api-spec.yml` (OpenAPI 3.0 format)
   - *Create your own API spec documenting your project's endpoints*
@@ -237,6 +258,20 @@ The following files are included as **reference examples** from the LIDR project
   - *Document your database structure and domain entities*
 - **Development Guide**: `ai-specs/specs/development_guide.md` (Setup, workflows)
   - *Write setup instructions specific to your tech stack*
+
+## 🌐 PHL Ecosystem
+
+This framework is wired into the PHL ecosystem. API contracts for every project live in **`github.com/phlara/apis`** — the single source of truth for what each project exposes and consumes.
+
+| Project | Stack | Status |
+|---------|-------|--------|
+| `urgara-newsletter` | Python + Docker + Brevo | Production |
+| `pds-newsletter` | Python + Docker + Resend | Production |
+| `dashboard-nivel1` (Cristian) | PHP + vanilla JS on Hostinger | Production |
+| `boostflow` | FastAPI + React + Supabase | Production |
+| `dashboard-phl` | PHP + vanilla JS (mirrors Nivel 1) | In construction |
+
+When working on any PHL project that exposes or consumes public endpoints, the contract file in `phlara/apis/<project-slug>.md` must be updated in the same work cycle. See **`docs/doc_architecture.md`** for the full ecosystem map and contract rules.
 
 
 ## 🤝 Contributing

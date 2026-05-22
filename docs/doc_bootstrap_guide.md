@@ -8,17 +8,23 @@ The goal: every new project starts with the **same anti-spaghetti discipline** L
 
 ## Quick Path (Recommended)
 
-You just open Claude Code from **anywhere on the machine** (typically a fresh empty folder for the new project) and say:
+Open Claude Code in a **fresh empty folder for the new project** and say:
 
 ```
-Iniciá un proyecto PHL llamado "<nombre>"
+Iniciá un nuevo proyecto siguiendo manual-SDD
 ```
 
-You do **not** need to specify the stack in the first message. Claude will:
-1. Ask what the project does (dashboard, API, integration, full-stack, CLI)
-2. Ask what it consumes or exposes in the PHL ecosystem
-3. Propose 2–3 stack options that fit the project's nature, with justification
-4. Wait for your explicit confirmation before touching any file
+That's all. You don't need to give the project name, the stack, or any other detail in the first message.
+
+Claude will:
+1. Clone `github.com/phlara/manual-SDD` to `/tmp` and copy the framework into your folder
+2. Ask you the project name (slug)
+3. Ask questions about the project's nature, what it consumes/exposes in PHL, deployment target
+4. **Recommend a primary stack with strong rationale** (not "here are options, you pick")
+5. Mention 1–2 alternatives only as trade-off references
+6. Wait for your explicit confirmation before touching any file
+
+The user's instruction in memory: "tengo conocimiento, pero soy más propenso a errores yo. Claude debe sugerir basado en el proyecto." So Claude leads, the user confirms.
 
 Alternatively, the slash command (available once the framework is copied):
 
