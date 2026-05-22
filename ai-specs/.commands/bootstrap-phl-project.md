@@ -26,14 +26,43 @@ Adapt the framework files to the project's chosen stack **without removing any L
 
 # Process
 
-## Phase 0 — Preconditions
+## Phase 0 — Determine working mode and destination
 
-1. Confirm we are at the project root (not inside `manual-SDD/`).
-2. Confirm these paths exist:
-   - `ai-specs/` (with `.agents/`, `.commands/`, `specs/`)
-   - `docs/doc_architecture.md`
-   - `CLAUDE.md` (symlink to `ai-specs/specs/base-standards.mdc`)
-3. If anything is missing, stop and tell the user to copy the `manual-SDD` framework first.
+Run `pwd` and `ls -la` to understand where you are. Three scenarios:
+
+### Scenario A — You are inside the `manual-SDD` framework repo
+Detected by: presence of `ai-specs/` + `docs/` + `README.md` mentioning "SDD Framework" or "AI4Devs".
+
+1. Tell the user: "Estoy en el repo `manual-SDD`. Voy a crear el proyecto `<slug>` como carpeta hermana en `../<slug>/`. ¿Confirmás?"
+2. On confirmation:
+   ```bash
+   PROJECT_ROOT="../$<slug>"
+   mkdir -p "$PROJECT_ROOT"
+   rsync -av --exclude='.git' --exclude='README.md' --exclude='.DS_Store' ./ "$PROJECT_ROOT/"
+   cd "$PROJECT_ROOT"
+   ```
+3. The destination now has the framework copied. Continue with Phase 1.
+
+### Scenario B — You are in an empty or near-empty folder
+Detected by: folder has no `ai-specs/`, no significant project files.
+
+1. Ask the user: "¿La carpeta actual es donde querés crear el proyecto? ¿O preferís una ruta distinta?"
+2. On confirmation of current folder:
+   ```bash
+   git clone git@github.com:phlara/manual-SDD.git /tmp/manual-SDD-source 2>/dev/null || git -C /tmp/manual-SDD-source pull origin main
+   rsync -av --exclude='.git' --exclude='README.md' --exclude='.DS_Store' /tmp/manual-SDD-source/ ./
+   ```
+3. Continue with Phase 1.
+
+### Scenario C — You are inside a project that already has the framework copied
+Detected by: `ai-specs/`, `docs/`, `CLAUDE.md` all present AND the project root looks like the project (not manual-SDD).
+
+1. Tell the user: "Detecté que el framework ya está copiado acá. Voy a adaptarlo en este lugar. ¿Confirmás?"
+2. Continue with Phase 1.
+
+---
+
+**After Phase 0, you MUST be in the project's working directory** with the framework files copied.
 
 ## Phase 1 — Stack Definition
 

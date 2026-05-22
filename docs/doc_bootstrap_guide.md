@@ -8,25 +8,34 @@ The goal: every new project starts with the **same anti-spaghetti discipline** L
 
 ## Quick Path (Recommended)
 
-```bash
-# 1. Create the empty project repo on GitHub
-gh repo create phlara/<project-slug> --private --clone
-cd <project-slug>
+You just open Claude Code from **anywhere on the machine** and say:
 
-# 2. Copy the manual-SDD framework into the new project
-git clone git@github.com:phlara/manual-SDD.git /tmp/manual-SDD
-rsync -av --exclude='.git' --exclude='README.md' /tmp/manual-SDD/ ./
-
-# 3. Open Claude Code in this folder and run the bootstrap command
-/bootstrap-phl-project <project-slug> <stack-hint>
+```
+Inicia un proyecto nuevo llamado "<nombre>" con stack <stack>
 ```
 
-The `/bootstrap-phl-project` command will:
+Or use the slash command directly:
+
+```
+/bootstrap-phl-project <nombre> <stack>
+```
+
+The command handles everything based on where you run it:
+
+| Where you run it | What happens |
+|---|---|
+| Inside the `manual-SDD` repo | Creates `../<nombre>/` as a sibling folder, copies the framework there, then adapts |
+| Inside an empty/new folder | Clones `manual-SDD` framework into current folder, then adapts |
+| Inside a project that already has the framework | Adapts in place |
+
+The command will:
+- Confirm the destination with you before copying anything
+- Ask for stack confirmation if not given
 - Adapt the 5 stack-specific files for your chosen tech
 - Inject the PHL ecosystem block into `CLAUDE.md`
 - Update `docs/doc_architecture.md` with this project's context
-- Create the contract file in `phlara/apis`
-- Initialize the git repo
+- Create the contract file in `phlara/apis` (clone, edit, commit, push)
+- Initialize the git repo of the new project
 
 ---
 
@@ -135,29 +144,21 @@ git push origin main
 
 ## Specific Procedure for Dashboard PHL
 
-Since Dashboard PHL is the project you are about to build, here is exactly what to do:
+Since Dashboard PHL is the project you are about to build:
 
-### 1. Create the repo
-
-```bash
-gh repo create phlara/dashboard-phlara --private --clone
-cd dashboard-phlara
-```
-
-### 2. Copy the framework
-
-```bash
-git clone git@github.com:phlara/manual-SDD.git /tmp/manual-SDD
-rsync -av --exclude='.git' --exclude='README.md' /tmp/manual-SDD/ ./
-```
-
-### 3. Run bootstrap
+### From the `manual-SDD` repo on your machine:
 
 ```
 /bootstrap-phl-project dashboard-phlara php-vanilla-js
 ```
 
-The stack `php-vanilla-js` mirrors Dashboard Nivel 1 (which is in production at `artemis-tech.io/cristian/`). That keeps the operational pattern consistent.
+The command will:
+1. Tell you "voy a crear `../dashboard-phlara/` como carpeta hermana, ¿confirmás?"
+2. After you confirm, copy the framework to `../dashboard-phlara/`
+3. Ask you to confirm the stack (`php-vanilla-js` mirrors Dashboard Nivel 1, which is in production at `artemis-tech.io/cristian/`, so the operational pattern stays consistent)
+4. Adapt the 5 stack-specific specs
+5. Wire it to `phlara/apis` (create `dashboard-phlara.md` contract, push it)
+6. Initialize the git repo of the new project
 
 ### 4. Confirm the stack with the bootstrap command
 
