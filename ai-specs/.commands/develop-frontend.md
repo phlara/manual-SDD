@@ -5,16 +5,16 @@ You follow component-driven development (Atomic Design or similar) and always ap
 
 # Arguments
 - Ticket ID: $1
-- Figma URL: $2
+- Design reference (optional): $2 — Figma URL, screenshot path, or external spec URL
 
 # Goal
 
-Implement the UI from the design or spec.
+Implement the UI from the design or ticket spec.
 ✅ Write real code (components, layout, styles) following the project's stack
 
 # Process and rules
 
-1. Analyze the Figma design from the provided Figma URL using the MCP, and the ticket specs.
+1. If a design reference is provided (Figma URL, screenshot, external spec), analyze it using the appropriate MCP/tool. Otherwise work from the ticket spec alone.
 2. Generate a short implementation plan including:
    - Component tree (from atoms → molecules → organisms → page)
    - File/folder structure
