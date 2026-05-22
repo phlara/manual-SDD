@@ -8,17 +8,25 @@ The goal: every new project starts with the **same anti-spaghetti discipline** L
 
 ## Quick Path (Recommended)
 
-You just open Claude Code from **anywhere on the machine** and say:
+You just open Claude Code from **anywhere on the machine** (typically a fresh empty folder for the new project) and say:
 
 ```
-Inicia un proyecto nuevo llamado "<nombre>" con stack <stack>
+Iniciá un proyecto PHL llamado "<nombre>"
 ```
 
-Or use the slash command directly:
+You do **not** need to specify the stack in the first message. Claude will:
+1. Ask what the project does (dashboard, API, integration, full-stack, CLI)
+2. Ask what it consumes or exposes in the PHL ecosystem
+3. Propose 2–3 stack options that fit the project's nature, with justification
+4. Wait for your explicit confirmation before touching any file
+
+Alternatively, the slash command (available once the framework is copied):
 
 ```
-/bootstrap-phl-project <nombre> <stack>
+/bootstrap-phl-project <nombre> [stack-opcional]
 ```
+
+Without the stack argument, the command goes through the same propose-and-confirm dialogue.
 
 The command handles everything based on where you run it:
 
@@ -144,21 +152,17 @@ git push origin main
 
 ## Specific Procedure for Dashboard PHL
 
-Since Dashboard PHL is the project you are about to build:
+Dashboard PHL is a special case: the stack is **already decided** by operational consistency with Dashboard Nivel 1 (PHP + vanilla JS on Hostinger, since both run on `artemis-tech.io`).
 
-### From the `manual-SDD` repo on your machine:
+For Dashboard PHL specifically you can skip the propose-options step:
 
 ```
-/bootstrap-phl-project dashboard-phlara php-vanilla-js
+Iniciá un proyecto PHL llamado "dashboard-phl" con stack PHP + vanilla JS (igual que Nivel 1)
 ```
 
-The command will:
-1. Tell you "voy a crear `../dashboard-phlara/` como carpeta hermana, ¿confirmás?"
-2. After you confirm, copy the framework to `../dashboard-phlara/`
-3. Ask you to confirm the stack (`php-vanilla-js` mirrors Dashboard Nivel 1, which is in production at `artemis-tech.io/cristian/`, so the operational pattern stays consistent)
-4. Adapt the 5 stack-specific specs
-5. Wire it to `phlara/apis` (create `dashboard-phlara.md` contract, push it)
-6. Initialize the git repo of the new project
+Claude will still ask you to confirm before adapting anything, but will not propose alternative stacks. The reasoning is documented and can be referenced when needed.
+
+For **any other project** that does not have a pre-decided stack, do NOT pass a stack — let Claude propose options based on the project's nature.
 
 ### 4. Confirm the stack with the bootstrap command
 
