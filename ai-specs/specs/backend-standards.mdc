@@ -6,6 +6,15 @@ alwaysApply: true
 
 # Backend Project Standards and Best Practices
 
+> ## ⚠️ Discipline, not stack
+> The rules in this document (DDD, SOLID, layered architecture, error handling, validation, naming,
+> testing) are **binding and stack-agnostic — keep them.** The specific technology and code examples
+> below (Node/Express/Prisma, etc.) are **LIDR's original teaching stack**: a **non-normative
+> reference, NOT a stack to follow.** Each project uses the backend stack that is **optimal for
+> itself** and translates these patterns into it. When an example and the project's stack differ, the
+> **rule wins** and you express it in the project's stack.
+
+
 ## Table of Contents
 
 - [Overview](#overview)
