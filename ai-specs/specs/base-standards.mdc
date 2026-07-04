@@ -3,6 +3,17 @@ description: This document contains all development rules and guidelines for thi
 alwaysApply: true
 ---
 
+> ## ⚠️ Discipline, not stack — read this first
+> This framework exists to enforce **engineering discipline** — anti-spaghetti code, DDD, SOLID,
+> layered architecture, scalability — so that AI-assisted development stays clean, low-debt and
+> maintainable. **That discipline is the ONLY thing every PHL project must preserve.**
+>
+> The **technology stack** referenced in the backend/frontend standards (Node/Express/Prisma, React
+> web, Bootstrap, Cypress) is the stack of LIDR's original teaching project. It is a **non-normative
+> example, NOT a rule to follow.** Every project MUST pick the stack that is **optimal for itself** and
+> adapt the standards to it. Rule of thumb when adapting: **keep every discipline rule, replace the
+> stack (and its code examples) freely.** Do not treat LIDR's stack as a default to keep.
+
 ## 1. Core Principles
 
 - **Small tasks, one at a time**: Always work in baby steps, one at a time. Never go forward more than one step.
