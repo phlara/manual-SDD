@@ -60,7 +60,7 @@ That's it. Claude will:
 3. Read `ai-specs/.commands/bootstrap-phl-project.md` and follow it
 4. Ask you the project name (if you didn't say it) and questions about the project's nature
 5. **Recommend a stack** with rationale (your job is to confirm, not choose blindly)
-6. Adapt the 5 stack-specific files to your chosen tech, preserving every LIDR architectural rule
+6. Adapt the 5 stack-specific files to your chosen tech, preserving every architectural discipline rule
 7. Create the contract file in `phlara/apis` and push it
 8. Initialize the project's git repo (local + optionally GitHub via `gh`)
 
@@ -248,9 +248,9 @@ All development follows principles defined in `ai-specs/specs/base-standards.mdc
 
 ## 📚 Technical context
 
-### Reference Examples (from LIDR Project)
+### Reference Examples (from the source course)
 
-The following files are included as **reference examples** from the LIDR project. You should create your own versions tailored to your specific project (the `/bootstrap-phl-project` command does this automatically):
+The following files are included as **reference examples** from the framework's source course. You should create your own versions tailored to your specific project (the `/bootstrap-phl-project` command does this automatically):
 
 - **API Specification**: `ai-specs/specs/api-spec.yml` (OpenAPI 3.0 format)
   - *Create your own API spec documenting your project's endpoints*
@@ -284,19 +284,14 @@ When contributing to the standards:
 4. Document breaking changes clearly
 5. Follow the same standards you're defining!
 
-## 📄 License
+## 📄 Origin & ownership
 
-**English:**
-
-The content of this repository is part of the AI4Devs program by LIDR.co. If you want to learn to code with AI like the pros and get more templates and resources like these, you can find all the information on the official website: https://lidr.co/ia-devs
-
-**Español:**
-
-El contenido de este repositorio es parte del programa AI4Devs de LIDR.co. Si quieres aprender a programar con IA como los pros, y obtener más plantillas y recursos como estos, puedes encontrar toda la información en la página oficial: https://lidr.co/ia-devs
+This is **phlara's SDD framework** for the PHL ecosystem. Its anti-spaghetti discipline was originally
+adapted from the AI4Devs course by LIDR.co; it has since been reworked and extended for phlara's own
+projects, stacks, and the `phlara/apis` contract system. Maintained by phlara for internal use across
+the PHL ecosystem.
 
 ---
 
-**Made with 🤖 by the LIDR community**
-
-For questions, issues, or suggestions, visit [LIDR.co](https://lidr.co/ia-devs)
+**Part of the PHL ecosystem · maintained by phlara** (`phlara.engine@gmail.com`)
 

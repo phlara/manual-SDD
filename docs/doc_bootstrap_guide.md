@@ -2,7 +2,7 @@
 
 This guide explains exactly how to start a new project in the PHL ecosystem using the `manual-SDD` framework.
 
-The goal: every new project starts with the **same anti-spaghetti discipline** LIDR designed, plus the **PHL ecosystem wiring** (contracts in `phlara/apis`).
+The goal: every new project starts with the **same anti-spaghetti discipline** the framework enforces, plus the **PHL ecosystem wiring** (contracts in `phlara/apis`).
 
 ---
 
@@ -61,10 +61,10 @@ When you copy `manual-SDD` into a new project:
 |------|-------------|-----|
 | `ai-specs/.agents/` | Copied **as-is** | Stack-agnostic — same agents work for every project |
 | `ai-specs/.commands/` | Copied **as-is** | Stack-agnostic — same commands work for every project |
-| `ai-specs/specs/base-standards.mdc` | Copied + PHL block appended | LIDR universal rules + PHL ecosystem snippet |
-| `ai-specs/specs/backend-standards.mdc` | **Adapted** to project stack | LIDR structure preserved; technology examples replaced |
+| `ai-specs/specs/base-standards.mdc` | Copied + PHL block appended | Universal discipline rules + PHL ecosystem snippet |
+| `ai-specs/specs/backend-standards.mdc` | **Adapted** to project stack | Discipline structure preserved; technology examples replaced |
 | `ai-specs/specs/frontend-standards.mdc` | **Adapted** to project stack | Same as above |
-| `ai-specs/specs/development_guide.md` | **Adapted** to project setup | Replace LTI Docker/Node setup with project setup |
+| `ai-specs/specs/development_guide.md` | **Adapted** to project setup | Replace the reference Docker/Node setup with project setup |
 | `ai-specs/specs/api-spec.yml` | **Reset** to skeleton | Each project starts with only `/healthz` |
 | `ai-specs/specs/data-model.md` | **Reset** to skeleton | Domain is built incrementally |
 | `ai-specs/specs/documentation-standards.mdc` | Copied **as-is** | Documentation rules are universal |
@@ -105,7 +105,7 @@ rsync -av --exclude='.git' --exclude='README.md' /tmp/manual-SDD/ ./
 
 ### Step 4 — Adapt the 5 stack-specific specs
 
-For each of these files, **keep every section heading and every rule** from LIDR. Only swap the technology-specific examples:
+For each of these files, **keep every section heading and every rule** from the framework. Only swap the technology-specific examples:
 
 1. `ai-specs/specs/backend-standards.mdc`
 2. `ai-specs/specs/frontend-standards.mdc`
@@ -205,8 +205,8 @@ After you approve the plan:
 ## What Must Never Happen
 
 - A new project that does not have its contract file in `phlara/apis` after the first endpoint ships
-- A new project that modifies the LIDR agents or commands in `ai-specs/` (those are framework-level — if they need to change, change them in `manual-SDD` and pull into projects)
-- A new project that deletes LIDR's anti-spaghetti rules from any spec file
+- A new project that modifies the framework agents or commands in `ai-specs/` (those are framework-level — if they need to change, change them in `manual-SDD` and pull into projects)
+- A new project that deletes the framework's anti-spaghetti rules from any spec file
 - Implementing a feature without going through `/plan-*-ticket` → review → `/develop-*`
 
 ---

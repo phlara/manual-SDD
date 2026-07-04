@@ -1,5 +1,5 @@
 ---
-description: Frontend development standards, best practices, and conventions for the LTI React application including component patterns, state management, UI/UX guidelines, and testing practices
+description: Frontend development standards, best practices, and conventions for a reference React application including component patterns, state management, UI/UX guidelines, and testing practices
 globs: ["frontend/src/**/*.{js,jsx,ts,tsx}", "frontend/cypress/**/*.{ts,js}", "frontend/tsconfig.json", "frontend/cypress.config.ts", "frontend/package.json"]
 alwaysApply: true
 ---
@@ -9,8 +9,8 @@ alwaysApply: true
 > ## ⚠️ Discipline, not stack
 > The rules in this document (component structure, state management, service-layer separation,
 > naming, error/loading handling, testing) are **binding and stack-agnostic — keep them.** The
-> specific technology and code examples below (React web, Bootstrap, Cypress, etc.) are **LIDR's
-> original teaching stack**: a **non-normative reference, NOT a stack to follow.** Each project uses
+> specific technology and code examples below (React web, Bootstrap, Cypress, etc.) are **the framework's
+> original reference stack**: a **non-normative reference, NOT a stack to follow.** Each project uses
 > the frontend stack that is **optimal for itself** and translates these patterns into it. When an
 > example and the project's stack differ, the **rule wins** and you express it in the project's stack.
 
@@ -58,7 +58,7 @@ alwaysApply: true
 
 ## Overview
 
-This document outlines the best practices, conventions, and standards used in the LTI frontend application. These practices ensure code consistency, maintainability, and optimal development experience.
+This document outlines the best practices, conventions, and standards used in a reference frontend application. These practices ensure code consistency, maintainability, and optimal development experience.
 
 ## Technology Stack
 
@@ -537,4 +537,4 @@ npm run cypress:run     # Run Cypress tests headlessly
 - **React Bootstrap** components for consistency
 - **Responsive design** principles throughout
 
-This document serves as the foundation for maintaining code quality and consistency across the LTI frontend application. All team members should follow these practices to ensure a maintainable and scalable codebase.
+This document serves as the foundation for maintaining code quality and consistency across a reference frontend application. All team members should follow these practices to ensure a maintainable and scalable codebase.

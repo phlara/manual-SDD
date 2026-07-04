@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide provides step-by-step instructions for setting up the development environment and running tests for the LTI ATS system.
+This guide provides step-by-step instructions for setting up the development environment and running tests for the reference project.
 
 ## 🚀 Setup Instructions
 
@@ -15,8 +15,8 @@ Ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone git@github.com:LIDR-academy/AI4Devs-LTI-extended.git
-cd AI4Devs-LTI-extended
+git clone <your-project-repo-url>
+cd <your-project>
 ```
 
 ### 2. Environment Configuration
@@ -28,16 +28,16 @@ Create environment files for both backend and frontend:
 # Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=LTIdbUser
-DB_PASSWORD=D1ymf8wyQEGthFR1E9xhCq
-DB_NAME=LTIdb
+DB_USER=appuser
+DB_PASSWORD=<db-password>
+DB_NAME=appdb
 
 # Application Configuration
 PORT=3000
 NODE_ENV=development
 
 # Prisma Database URL
-DATABASE_URL="postgresql://LTIdbUser:D1ymf8wyQEGthFR1E9xhCq@localhost:5432/LTIdb"
+DATABASE_URL="postgresql://appuser:<db-password>@localhost:5432/appdb"
 ```
 
 **Frontend Environment** (`frontend/.env`):
@@ -60,9 +60,9 @@ docker-compose ps
 The PostgreSQL database will be available at:
 - **Host**: `localhost`
 - **Port**: `5432`
-- **Database**: `LTIdb`
-- **Username**: `LTIdbUser`
-- **Password**: `D1ymf8wyQEGthFR1E9xhCq`
+- **Database**: `appdb`
+- **Username**: `appuser`
+- **Password**: `<db-password>`
 
 ### 4. Backend Setup
 

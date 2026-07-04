@@ -1,5 +1,5 @@
 ---
-description: Backend development standards, best practices, and conventions for the LTI Node.js/TypeScript/Express application including Domain-Driven Design, SOLID principles, architecture patterns, API design, and testing practices
+description: Backend development standards, best practices, and conventions for a reference Node.js/TypeScript/Express application including Domain-Driven Design, SOLID principles, architecture patterns, API design, and testing practices
 globs: ["backend/src/**/*.ts", "backend/prisma/**/*.{prisma,ts}", "backend/jest.config.js", "backend/tsconfig.json", "backend/serverless.yml", "backend/package.json"]
 alwaysApply: true
 ---
@@ -9,7 +9,7 @@ alwaysApply: true
 > ## ⚠️ Discipline, not stack
 > The rules in this document (DDD, SOLID, layered architecture, error handling, validation, naming,
 > testing) are **binding and stack-agnostic — keep them.** The specific technology and code examples
-> below (Node/Express/Prisma, etc.) are **LIDR's original teaching stack**: a **non-normative
+> below (Node/Express/Prisma, etc.) are **the framework's original reference stack**: a **non-normative
 > reference, NOT a stack to follow.** Each project uses the backend stack that is **optimal for
 > itself** and translates these patterns into it. When an example and the project's stack differ, the
 > **rule wins** and you express it in the project's stack.
@@ -81,7 +81,7 @@ alwaysApply: true
 
 ## Overview
 
-This document outlines the best practices, conventions, and standards used in the LTI backend application. The backend follows Domain-Driven Design (DDD) principles and implements a layered architecture to ensure code consistency, maintainability, and scalability.
+This document outlines the best practices, conventions, and standards used in a reference backend application. The backend follows Domain-Driven Design (DDD) principles and implements a layered architecture to ensure code consistency, maintainability, and scalability.
 
 ## Technology Stack
 
@@ -1234,4 +1234,4 @@ export const handler = async (
 };
 ```
 
-This document serves as the foundation for maintaining code quality and consistency across the LTI backend application. All team members should follow these practices to ensure a maintainable, scalable, and testable codebase.
+This document serves as the foundation for maintaining code quality and consistency across a reference backend application. All team members should follow these practices to ensure a maintainable, scalable, and testable codebase.

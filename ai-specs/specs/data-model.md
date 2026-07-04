@@ -1,6 +1,6 @@
 # Data Model Documentation
 
-This document describes the data model for the LTI (Learning Tracking Initiative) application, including entity descriptions, field definitions, relationships, and an entity-relationship diagram.
+This document describes the data model for a reference application, including entity descriptions, field definitions, relationships, and an entity-relationship diagram.
 
 ## Model Descriptions
 
