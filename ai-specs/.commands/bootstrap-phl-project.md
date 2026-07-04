@@ -26,6 +26,13 @@ Adapt the framework files to the project's chosen stack **without removing any L
 
 # Hard Rules (Mandatory)
 
+> **Read this before applying the rules below — "LIDR" means the DISCIPLINE, not the stack.** What you
+> preserve at 100% is the *engineering discipline* (DDD, SOLID, layered architecture, naming,
+> anti-patterns, testing). You do **NOT** preserve LIDR's *technology stack*: the project's stack must
+> be the one that is **optimal for that project**, and you replace the stack and all its code examples
+> freely. Where the rules below say "every rule/principle must remain", that refers to discipline rules,
+> never to stack choices.
+
 1. **Preserve LIDR's anti-spaghetti discipline at 100%.** Every section heading, every rule, every principle in the LIDR specs must remain. You only swap technology-specific examples (TypeScript → project language, Prisma → project ORM, React → project framework).
 2. **Never delete an entire section.** If a section's content does not apply, keep the heading and replace the body with the project's equivalent.
 3. **Never delete a rule.** If a rule is stack-bound, translate it; if it is universal (SOLID, DDD, separation of layers, naming), keep it verbatim.
